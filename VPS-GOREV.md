@@ -61,12 +61,16 @@ npm run fetch
 `data/products.json` → `meta.kaynak: "canli"` olmalı ve gerçek ürünler dolmalı.
 
 ### 4. Siteyi VPS'te yayınla (private kalsın — sadece bu VPS sunsun)
-Hızlı yol:
+Hızlı yol (Basic Auth ile private):
 ```bash
-npm run serve        # http://0.0.0.0:8080
+AUTH_USER=ben AUTH_PASS=gizli npm run serve   # http://0.0.0.0:8080
+# veya: BASIC_AUTH="ben:gizli" npm run serve
 ```
+`serve.mjs` artık `AUTH_USER`/`AUTH_PASS` (ya da `BASIC_AUTH="user:pass"`) verildiğinde
+**HTTP Basic Auth** uygular; verilmezse site herkese açık kalır (başlangıçta uyarı basar).
+
 Kalıcı yol (önerilir): **nginx** ile repo klasörünü statik servis et + (varsa) alan adı/HTTPS.
-Yayını sadece sahibinin görmesi için **HTTP Basic Auth** veya IP kısıtı ekle (private istiyoruz).
+nginx kullanıyorsan auth'u nginx tarafında (`auth_basic`) veya IP kısıtı ile de verebilirsin.
 
 ### 5. Otomatik güncelleme (cron)
 ```bash

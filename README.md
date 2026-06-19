@@ -73,9 +73,17 @@ selector'ları düzeltiriz.
 
 ### Siteyi VPS'te yayınlama
 ```bash
-npm run serve            # http://SUNUCU_IP:8080
+npm run serve            # http://SUNUCU_IP:8080 (auth kapalı, herkese açık)
+
+# Private (sadece sahibi görsün) — HTTP Basic Auth:
+AUTH_USER=ben AUTH_PASS=gizli npm run serve
+# veya tek değişkenle:
+BASIC_AUTH="ben:gizli" npm run serve
+
 # veya nginx ile statik klasörü servis et
 ```
+> Kullanıcı/şifre verilmezse site herkese açık yayınlanır ve başlangıçta sarı bir uyarı
+> basılır. Private istiyorsan `AUTH_USER`/`AUTH_PASS` (ya da `BASIC_AUTH`) ver.
 
 ### Otomatik güncelleme (cron)
 ```bash
