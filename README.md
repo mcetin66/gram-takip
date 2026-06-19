@@ -47,8 +47,40 @@ Yerelde denemek için: bu klasörde `python3 -m http.server 8000` çalıştır, 
 }
 ```
 
-## Veri çekme motoru (sonraki adım)
-Pazaryerleri veri merkezi IP'lerinden gelen otomatik istekleri engeller (403). Gerçek veriyi
-toplamak için seçenekler: profesyonel scraping API (ScrapingBee/ScraperAPI), gerçek tarayıcı +
-residential IP (Playwright), veya pazaryeri resmi affiliate API'leri. Seçilen yöntem
-`scripts/` altına eklenip `data/products.json`'u günceller.
+## Veri çekme motoru (Playwright — VPS'te çalışır)
+
+Pazaryerleri basit isteklerde 403 döner; **Playwright gerçek tarayıcı** açtığı için çoğunu aşar.
+
+### VPS kurulumu
+```bash
+git clone <repo> && cd hairharmony
+npm install
+npx playwright install --with-deps chromium
+
+# Önce TEK siteyle test et (en kolayı idefix):
+npm run fetch:one idefix
+
+# Sorunsuzsa tümünü çek:
+npm run fetch
+```
+`data/products.json` gerçek veriyle güncellenir. Bir site kart bulamazsa
+`data/debug/<site>.{html,png}` üretilir → ona bakıp `scripts/sites.mjs` içindeki
+selector'ları düzeltiriz.
+
+### Siteyi VPS'te yayınlama
+```bash
+npm run serve            # http://SUNUCU_IP:8080
+# veya nginx ile statik klasörü servis et
+```
+
+### Otomatik güncelleme (cron)
+```bash
+# her sabah 08:00'de çek
+0 8 * * * cd /opt/hairharmony && /usr/bin/npm run fetch >> fetch.log 2>&1
+```
+
+### Notlar
+- **idefix / pazarama / pttavm / n11** → Playwright ile genelde sorunsuz.
+- **Trendyol / Hepsiburada** → en katı korumalı; takılırsa stealth ayarı veya residential proxy eklenir.
+- Liste sayfasından **fiyat/gram/satıcı/link** alınır. **Taksit/kargo/teslimat** ürün
+  sayfası doğrulaması gerektirir — sonraki adımda eklenecek (`ucTaksit` vb. şimdilik `null`/N/A).
