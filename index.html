@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Altın Bilezik Fiyat Takip · TL/gr Sıralı</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🪙 Altın Bilezik Fiyat Takip</h1>
+    <p class="sub">22 ayar işçiliksiz bilezikler · <strong>gram başına fiyata (TL/gr) göre en ucuzdan</strong> sıralı</p>
+    <div id="sampleBanner" class="banner hidden">
+      ⚠️ Şu an <strong>örnek veri</strong> gösteriliyor. Gerçek liste fiyatları değildir — veri çekme motoru bağlanınca otomatik güncellenecek.
+    </div>
+  </header>
+
+  <section class="summary" id="summary"></section>
+
+  <section class="controls">
+    <label>Gramaj filtresi:
+      <select id="gramFilter"><option value="all">Tümü</option></select>
+    </label>
+    <label>Pazaryeri:
+      <select id="marketFilter"><option value="all">Tümü</option></select>
+    </label>
+    <label><input type="checkbox" id="onlyTaksit" /> Sadece peşin fiyatına 3 taksit</label>
+    <span class="meta" id="updatedAt"></span>
+  </section>
+
+  <h2>🏆 En Avantajlı İlk 10</h2>
+  <div class="table-wrap"><table id="top10"></table></div>
+
+  <h2>📋 Tüm Ürünler (TL/gr artan)</h2>
+  <div class="table-wrap"><table id="allTable"></table></div>
+
+  <h2>📦 Her Gramaj İçin En Ucuz</h2>
+  <div class="table-wrap"><table id="perGram"></table></div>
+
+  <footer>
+    <p>Veri kaynağı: <code>data/products.json</code> · Hesaplama: <code>TL/gr = (Fiyat + Kargo) / Gramaj</code></p>
+    <p class="muted">Kupon, banka kampanyası ve sepet indirimleri hesaba katılmaz; yalnızca herkese açık liste fiyatları kullanılır.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

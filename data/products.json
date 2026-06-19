@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "guncellemeTarihi": "2026-06-19T00:00:00+03:00",
+    "kaynak": "ornek",
+    "not": "Bu dosyadaki satirlar ORNEK/placeholder verilerdir. Gercek fiyatlar veri cekme motoru baglaninca otomatik dolacaktir. Altin fiyati dakikalik degisir; bu degerler gercek liste fiyati DEGILDIR."
+  },
+  "urunler": [
+    {
+      "pazaryeri": "İdefix",
+      "satici": "AgaKulche",
+      "urunAdi": "AgaKulche 3'lü Burma 25 gr 22 Ayar Altın Bilezik",
+      "gramaj": 25,
+      "fiyat": 110395.77,
+      "ucTaksit": true,
+      "taksitliTutar": 110395.77,
+      "kargo": 0,
+      "teslimat": "2-4 iş günü",
+      "link": "https://www.idefix.com/agakulche-3lu-burma-25-gr-22-ayar-altin-bilezik-p-6337703",
+      "tarih": "2026-06-19T00:00:00+03:00",
+      "ornek": true
+    },
+    {
+      "pazaryeri": "İdefix",
+      "satici": "AgaKulche",
+      "urunAdi": "AgaKulche 3'lü Burma 20 gr 22 Ayar Bilezik",
+      "gramaj": 20,
+      "fiyat": 88500.00,
+      "ucTaksit": true,
+      "taksitliTutar": 88500.00,
+      "kargo": 0,
+      "teslimat": "2-4 iş günü",
+      "link": "https://www.idefix.com/agakulche-3lu-burma-20-gr-22-ayar-bilezik-p-7021097",
+      "tarih": "2026-06-19T00:00:00+03:00",
+      "ornek": true
+    },
+    {
+      "pazaryeri": "Trendyol",
+      "satici": "Örnek Kuyumcu",
+      "urunAdi": "22 Ayar İşçiliksiz 10 gr Bilezik (ÖRNEK)",
+      "gramaj": 10,
+      "fiyat": 44200.00,
+      "ucTaksit": true,
+      "taksitliTutar": 44200.00,
+      "kargo": 0,
+      "teslimat": "1-3 iş günü",
+      "link": "https://www.trendyol.com/",
+      "tarih": "2026-06-19T00:00:00+03:00",
+      "ornek": true
+    },
+    {
+      "pazaryeri": "Hepsiburada",
+      "satici": "Örnek Satıcı",
+      "urunAdi": "22 Ayar İşçiliksiz 5 gr Bilezik (ÖRNEK)",
+      "gramaj": 5,
+      "fiyat": 22350.00,
+      "ucTaksit": false,
+      "taksitliTutar": null,
+      "kargo": 49.90,
+      "teslimat": "2-5 iş günü",
+      "link": "https://www.hepsiburada.com/",
+      "tarih": "2026-06-19T00:00:00+03:00",
+      "ornek": true
+    }
+  ]
+}
