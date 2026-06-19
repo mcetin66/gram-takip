@@ -1,5 +1,9 @@
 # 🪙 Altın Bilezik Fiyat Takip
 
+> 📝 **Not:** Bu repo şu an `hairharmony` adıyla duruyor (eski isim). İleride
+> **`gram-takip`** olarak yeniden adlandırılacak. Yeniden adlandırınca yerel remote'u
+> güncelle: `git remote set-url origin https://github.com/mcetin66/gram-takip.git`
+
 Belirtilen pazaryerlerindeki **22 ayar işçiliksiz altın bilezikleri** listeleyen ve
 **gram başına fiyata (TL/gr) göre en ucuzdan** sıralayan, kişiye özel basit bir web sitesi.
 
