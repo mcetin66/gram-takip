@@ -7,7 +7,8 @@
   "scripts": {
     "fetch": "node scripts/fetch.mjs",
     "fetch:one": "node scripts/fetch.mjs --only",
-    "serve": "node scripts/serve.mjs"
+    "serve": "node scripts/serve.mjs",
+    "server": "node scripts/server.mjs"
   },
   "dependencies": {
     "playwright": "^1.48.0"
