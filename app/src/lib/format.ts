@@ -38,3 +38,27 @@ export function saat(iso: string): string {
     second: "2-digit",
   });
 }
+
+/**
+ * Pazaryeri etiketi normalize et:
+ *  "idefix.com" | "www.idefix.com" | "idefix" | "İdefix" → "İdefix"
+ * Backend eski/yeni versiyonlarda farklı formatta gönderebilir; SPA daima temiz gösterir.
+ */
+const SITE_ISIMLERI: Record<string, string> = {
+  idefix: "İdefix",
+  trendyol: "Trendyol",
+  hepsiburada: "Hepsiburada",
+  n11: "N11",
+  amazon: "Amazon TR",
+  altinkaynak: "Altınkaynak",
+};
+
+export function displaySite(label: string | undefined | null): string {
+  if (!label) return "";
+  const key = label
+    .toLocaleLowerCase("tr")
+    .replace(/^www\./, "")
+    .replace(/\.(com\.tr|com|net|org|co|io)$/, "");
+  if (SITE_ISIMLERI[key]) return SITE_ISIMLERI[key]!;
+  return key.charAt(0).toLocaleUpperCase("tr") + key.slice(1);
+}

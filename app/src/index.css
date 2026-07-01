@@ -96,12 +96,11 @@ code { background: var(--card-strong); padding: 1px 6px; border-radius: 6px; fon
 .row--best .row__rank { color: var(--gold); }
 
 .row__main { min-width: 0; }
-.row__title { font-weight: 600; font-size: 0.94rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.01em; }
-.row__sub { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 6px; }
-.chip { font-size: 0.68rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--card-strong); color: var(--muted); border: 1px solid var(--line); white-space: nowrap; }
+.row__chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.chip { font-size: 0.72rem; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--card-strong); color: var(--muted); border: 1px solid var(--line); white-space: nowrap; }
 .chip--site { background: var(--gold-soft); color: var(--gold); border-color: transparent; }
+.chip--seller { background: rgba(255, 255, 255, 0.06); color: var(--ink); border-color: var(--line-strong); }
 .chip--sim { background: rgba(120, 130, 255, 0.16); color: #9aa6ff; border-color: transparent; }
-.row__seller { font-size: 0.72rem; color: var(--muted-2); }
 
 .row__metrics { text-align: right; }
 .row__tlg { font-size: 1.02rem; font-weight: 750; letter-spacing: -0.02em; color: var(--gold); white-space: nowrap; }

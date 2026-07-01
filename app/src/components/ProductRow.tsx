@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Product } from "../types";
 import { tlPerGram } from "../lib/calc";
-import { formatTL, formatTL2, formatGram, goreliZaman } from "../lib/format";
+import { displaySite, formatTL, formatTL2, formatGram, goreliZaman } from "../lib/format";
 import { IconExternal, IconTrash } from "./Icons";
 
 interface Props {
@@ -31,20 +31,20 @@ export function ProductRow({ urun, sira, onSil }: Props) {
 
   const tlg = tlPerGram(urun);
   const enUcuz = sira === 1;
+  const pazaryeri = displaySite(urun.siteLabel);
 
   return (
     <div className={`row ${flash ? `row--${flash}` : ""} ${enUcuz ? "row--best" : ""}`}>
       <div className="row__rank">{enUcuz ? "★" : sira}</div>
 
-      <div className="row__main">
-        <div className="row__title" title={urun.urunAdi}>{urun.urunAdi}</div>
-        <div className="row__sub">
-          <span className="chip chip--site">{urun.siteLabel}</span>
+      <div className="row__main" title={urun.urunAdi}>
+        <div className="row__chips">
+          <span className="chip chip--site">{pazaryeri}</span>
+          {urun.satici && urun.satici !== pazaryeri && (
+            <span className="chip chip--seller">{urun.satici}</span>
+          )}
           <span className="chip">{urun.ayar} ayar</span>
           <span className="chip">{formatGram(urun.gram)}</span>
-          {urun.satici && urun.satici !== urun.siteLabel && (
-            <span className="row__seller">· {urun.satici}</span>
-          )}
           {urun.simulated && <span className="chip chip--sim">simüle</span>}
         </div>
       </div>
