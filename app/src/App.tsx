@@ -17,6 +17,16 @@ export default function App() {
   );
 
   const { urunler, ekle, sil, hepsiniGuncelle, guncelleniyor } = useProducts(fetcher);
+  
+  // Altınkaynak referansını otomatik ekle (eğer yoksa)
+  useEffect(() => {
+    const hasAltinkaynak = urunler.some(u => u.site === 'altinkaynak');
+    if (!hasAltinkaynak && urunler.length > 0) {
+      // Sadece liste boş değilse (kullanıcı kullanmaya başladıysa) ekle
+      ekle("https://www.altinkaynak.com/canli-kurlar/").catch(() => {});
+    }
+  }, [urunler.length, ekle]);
+
   const { kalanSn, simdiCalistir } = useAutoRefresh(ayarlar.otomatikGuncellemeSn, hepsiniGuncelle);
 
   const sonGuncelleme = useMemo<string | null>(() => {
