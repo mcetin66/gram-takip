@@ -1,0 +1,11 @@
+[Unit]
+Description=Gram Takip Keşif — saatte 1 tetikle
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=1h
+Unit=gram-takip-discover.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target

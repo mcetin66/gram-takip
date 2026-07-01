@@ -31,3 +31,32 @@ export interface Ayarlar {
   backendUrl: string;
   otomatikGuncellemeSn: number;
 }
+
+/** Keşif motorunun her gramaj için bulduğu en ucuz aday. */
+export interface KesifUrun {
+  pazaryeri: string;
+  site: string;
+  satici: string | null;
+  urunAdi: string;
+  gram: number;
+  ayar: number;
+  fiyat: number;
+  kargo: number;
+  link: string;
+  tarih: string;
+  /** Backend hesaplayıp gönderdiği için burada da tutuyoruz (opsiyonel). */
+  _tlg?: number;
+}
+
+export interface KesifGramSonucu {
+  gram: number;
+  urun: KesifUrun | null;
+}
+
+export interface KesifRapor {
+  guncellemeTarihi: string | null;
+  kaynak: "canli" | "yok";
+  toplamUrun: number;
+  gramSonuclari: KesifGramSonucu[];
+  perSite?: Record<string, number>;
+}

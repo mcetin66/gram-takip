@@ -1,0 +1,7 @@
+[Unit]
+Description=Gram Takip — Keşif tetikleyici (POST /discover/refresh)
+After=network.target gram-takip-backend.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/curl -sS -X POST http://127.0.0.1:8787/discover/refresh -H "Content-Type: application/json" -d "{}"

@@ -1,6 +1,8 @@
 import http from 'http';
+import { readFile } from 'node:fs/promises';
 import { chromium } from 'playwright';
 import { getParser } from './parser/index.mjs';
+import { runDiscover } from './discover.mjs';
 
 const PORT = process.env.PORT || 8787;
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
@@ -115,6 +117,25 @@ async function handleParse(url, opts = {}) {
   return { status: 502, body: { error: 'engellendi veya hata oluştu' } };
 }
 
+// ---- Discover (keşif) durumu -------------------------------------------
+let discoverState = { calisiyor: false, sonBitis: null, sonHata: null, baslangic: null };
+
+async function discoverBaslat({ only }) {
+  if (discoverState.calisiyor) return { zaten: true };
+  discoverState = { calisiyor: true, sonBitis: discoverState.sonBitis, sonHata: null, baslangic: new Date().toISOString() };
+  runDiscover({ only })
+    .then((rapor) => {
+      discoverState = { calisiyor: false, sonBitis: new Date().toISOString(), sonHata: null, baslangic: null };
+      console.log(`[discover] bitti (${rapor?.sureMs}ms, ${rapor?.toplamUrun} ürün)`);
+    })
+    .catch((err) => {
+      const msg = String(err?.message || err);
+      discoverState = { calisiyor: false, sonBitis: new Date().toISOString(), sonHata: msg, baslangic: null };
+      console.error(`[discover] hata:`, msg);
+    });
+  return { basladi: true };
+}
+
 const server = http.createServer(async (req, res) => {
   setCors(res);
 
@@ -126,6 +147,36 @@ const server = http.createServer(async (req, res) => {
 
   if (req.url === '/health' && req.method === 'GET') {
     return sendJson(res, 200, { ok: true, browser: !!browser?.isConnected() });
+  }
+
+  if (req.url === '/discover' && req.method === 'GET') {
+    try {
+      const raw = await readFile('data/discover.json', 'utf8');
+      return sendJson(res, 200, JSON.parse(raw));
+    } catch {
+      return sendJson(res, 200, {
+        guncellemeTarihi: null,
+        kaynak: 'yok',
+        toplamUrun: 0,
+        gramSonuclari: [],
+        durum: discoverState,
+      });
+    }
+  }
+
+  if (req.url === '/discover/status' && req.method === 'GET') {
+    return sendJson(res, 200, discoverState);
+  }
+
+  if (req.url?.startsWith('/discover/refresh') && req.method === 'POST') {
+    try {
+      const body = await readBody(req);
+      const { only } = body ? JSON.parse(body) : {};
+      const sonuc = await discoverBaslat({ only });
+      return sendJson(res, 202, { ...sonuc, durum: discoverState });
+    } catch (err) {
+      return sendJson(res, 500, { error: 'refresh hata', detay: String(err?.message || err) });
+    }
   }
 
   if (req.url?.startsWith('/parse') && req.method === 'POST') {
