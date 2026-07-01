@@ -14,7 +14,7 @@ export const hepsiburadaParser: SiteParser = {
       urunAdi: slug ? slugToText(slug) : null,
       gram: extractGram(slug),
       ayar: extractAyar(slug),
-      satici: null,
+      marka: null,
     };
   },
 };

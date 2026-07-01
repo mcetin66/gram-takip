@@ -39,7 +39,8 @@ export async function parse(page) {
 
   return {
     urunAdi: "22 Ayar Hurda Altın (Alış)",
-    satici: siteLabel,
+    marka: null,
+    satici: null,
     fiyat: parsePrice(data.buyB),
     kargo: null,
     gram: 1,

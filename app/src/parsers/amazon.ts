@@ -16,7 +16,7 @@ export const amazonParser: SiteParser = {
       urunAdi: nameSeg ? slugToText(nameSeg) : null,
       gram: extractGram(nameSeg),
       ayar: extractAyar(nameSeg),
-      satici: null,
+      marka: null,
     };
   },
 };

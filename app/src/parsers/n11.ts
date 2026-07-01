@@ -14,7 +14,7 @@ export const n11Parser: SiteParser = {
       urunAdi: slug ? slugToText(slug.replace(/-\d+$/, "")) : null,
       gram: extractGram(slug),
       ayar: extractAyar(slug),
-      satici: null,
+      marka: null,
     };
   },
 };

@@ -99,7 +99,8 @@ code { background: var(--card-strong); padding: 1px 6px; border-radius: 6px; fon
 .row__chips { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .chip { font-size: 0.72rem; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--card-strong); color: var(--muted); border: 1px solid var(--line); white-space: nowrap; }
 .chip--site { background: var(--gold-soft); color: var(--gold); border-color: transparent; }
-.chip--seller { background: rgba(255, 255, 255, 0.06); color: var(--ink); border-color: var(--line-strong); }
+.chip--brand { background: rgba(255, 255, 255, 0.09); color: var(--ink); border-color: var(--line-strong); font-weight: 650; }
+.chip--seller { background: rgba(255, 255, 255, 0.04); color: var(--muted); border-color: var(--line); font-style: italic; }
 .chip--sim { background: rgba(120, 130, 255, 0.16); color: #9aa6ff; border-color: transparent; }
 
 .row__metrics { text-align: right; }

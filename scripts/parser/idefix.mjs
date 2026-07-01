@@ -3,16 +3,19 @@ import { parseGramaj, parsePrice } from '../lib.mjs';
 /**
  * İdefix Ürün Sayfası Parser
  * Örnek: https://www.idefix.com/rise-gold-riselimited-15-gram-22-ayar-oluklu-ajda-bilezik-isciliksiz-p-15063439
+ *
+ * Sözleşme:
+ *   marka   = üretici (ürün adının başında ya da HTML brand alanında)
+ *   satici  = pazaryerindeki mağaza (yoksa null — marka'ya DÜŞMEZ)
  */
 
-// Sözleşme: her parser kendi site kimliğini bildirir.
 export const site = "idefix";
 export const siteLabel = "İdefix";
 
 /**
  * Ürün adının başındaki markayı çıkar.
  * "Rise Gold RİSELİMİTED 15 GRAM ..." → "Rise Gold"
- * "AgaKulche 3'lü Burma ..." → "AgaKulche"
+ * "AgaKulche 3'lü Burma ..."          → "AgaKulche"
  * (Rakam veya tümü BÜYÜK harfli kelimede durur — sonrası model/gram/ayar.)
  */
 function extractMarka(urunAdi) {
@@ -32,15 +35,15 @@ export async function parse(page) {
   await page.waitForTimeout(5000);
 
   const data = await page.evaluate(() => {
-    const getBySelectors = (selectors) => {
-      for (const selector of selectors) {
-        const el = document.querySelector(selector);
+    const oku = (selectors) => {
+      for (const s of selectors) {
+        const el = document.querySelector(s);
         if (el && el.innerText.trim()) return el.innerText.trim();
       }
       return null;
     };
 
-    const urunAdi = getBySelectors([
+    const urunAdi = oku([
       'h1[id="productName"]',
       'h1.product-name',
       '.product-name',
@@ -48,14 +51,23 @@ export async function parse(page) {
       'h1'
     ]);
 
-    const saticiHtml = getBySelectors([
+    const brand = oku([
+      '.brand a',
+      '.brand',
+      '.product-brand',
+      '[class*="Brand"] a',
+      '[class*="brand"] a'
+    ]);
+
+    const merchant = oku([
       '.merchant-name a',
       '.merchant-name',
       '.seller-name',
-      '.product-seller'
+      '.product-seller',
+      '[class*="Seller"] a'
     ]);
 
-    const fiyatText = getBySelectors([
+    const fiyatText = oku([
       '.product-price-wrapper .price',
       '.price-info .price',
       '#salePrice',
@@ -66,15 +78,15 @@ export async function parse(page) {
       '.total-price'
     ]) || document.body.innerText.match(/(\d{1,3}(?:\.\d{3})*,\d{2})\s*TL/)?.[1];
 
-    return { urunAdi, saticiHtml, fiyatText };
+    return { urunAdi, brand, merchant, fiyatText };
   });
 
-  const marka = extractMarka(data.urunAdi);
+  const marka = data.brand || extractMarka(data.urunAdi);
 
   return {
     urunAdi: data.urunAdi,
-    // Öncelik: sayfada yazan satıcı → ürün adından çıkarılan marka → site adı
-    satici: data.saticiHtml || marka || siteLabel,
+    marka,
+    satici: data.merchant,   // yoksa null — marka'ya düşürme
     fiyat: parsePrice(data.fiyatText),
     kargo: null,
     gram: parseGramaj(data.urunAdi || ""),

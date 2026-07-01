@@ -5,7 +5,8 @@ export interface ParsedProduct {
   url: string;
   site: string; // makine adı: 'idefix', 'trendyol'...
   siteLabel: string; // görünen ad: 'İdefix'
-  satici: string;
+  marka: string | null; // üretici (Rise Gold, AgaKulche...); yoksa null
+  satici: string | null; // pazaryerindeki mağaza; marka ile aynı olabilir; yoksa null
   urunAdi: string;
   gram: number;
   ayar: number;

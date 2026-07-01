@@ -32,6 +32,12 @@ export function ProductRow({ urun, sira, onSil }: Props) {
   const tlg = tlPerGram(urun);
   const enUcuz = sira === 1;
   const pazaryeri = displaySite(urun.siteLabel);
+  const marka = urun.marka?.trim() || null;
+  const satici = urun.satici?.trim() || null;
+  // Satıcı, marka ile ve pazaryeri ile aynı değilse ayrı chip olarak göster.
+  const saticiFarkli = !!satici
+    && satici.toLocaleLowerCase("tr") !== (marka ?? "").toLocaleLowerCase("tr")
+    && displaySite(satici).toLocaleLowerCase("tr") !== pazaryeri.toLocaleLowerCase("tr");
 
   return (
     <div className={`row ${flash ? `row--${flash}` : ""} ${enUcuz ? "row--best" : ""}`}>
@@ -40,9 +46,8 @@ export function ProductRow({ urun, sira, onSil }: Props) {
       <div className="row__main" title={urun.urunAdi}>
         <div className="row__chips">
           <span className="chip chip--site">{pazaryeri}</span>
-          {urun.satici && urun.satici !== pazaryeri && (
-            <span className="chip chip--seller">{urun.satici}</span>
-          )}
+          {marka && <span className="chip chip--brand">{marka}</span>}
+          {saticiFarkli && <span className="chip chip--seller">{satici}</span>}
           <span className="chip">{urun.ayar} ayar</span>
           <span className="chip">{formatGram(urun.gram)}</span>
           {urun.simulated && <span className="chip chip--sim">simüle</span>}

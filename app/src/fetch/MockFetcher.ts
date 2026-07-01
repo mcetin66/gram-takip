@@ -23,7 +23,8 @@ export class MockFetcher implements Fetcher {
       url: url.href,
       site: bilgi.site,
       siteLabel: bilgi.siteLabel,
-      satici: bilgi.satici ?? bilgi.siteLabel,
+      marka: bilgi.marka,     // URL slug'ından çıkarım (yalnız bazı sitelerde var)
+      satici: null,           // simülasyonda bilinmiyor
       urunAdi: bilgi.urunAdi ?? "Altın Ürün",
       gram,
       ayar,

@@ -13,7 +13,7 @@ export const idefixParser: SiteParser = {
       urunAdi: slug ? slugToText(slug) : null,
       gram: extractGram(slug),
       ayar: extractAyar(slug),
-      satici: null, // çoğunlukla marka; backend ürün sayfasından alır
+      marka: null, // URL slug'ından güvenilir çıkarım yok; backend ürün sayfasından alır
     };
   },
 };

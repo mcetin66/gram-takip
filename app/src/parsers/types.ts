@@ -10,7 +10,7 @@ export interface UrlBilgisi {
   urunAdi: string | null;
   gram: number | null;
   ayar: number | null;
-  satici: string | null;
+  marka: string | null;
 }
 
 /**
