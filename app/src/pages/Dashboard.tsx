@@ -24,10 +24,27 @@ export function Dashboard({
   onSimdiGuncelle,
   onSil,
 }: Props) {
-  const enUcuz = useMemo(
-    () => (urunler.length ? tlPerGram(urunler[0]!) : null),
-    [urunler],
-  );
+  const { enUcuz, hurdaAltin, oran } = useMemo(() => {
+    // Normal ürünler (hurda olmayanlar)
+    const normalUrunler = urunler.filter(u => u.site !== 'altinkaynak');
+    // Altınkaynak'tan gelen 22 ayar hurda fiyatı
+    const hurda = urunler.find(u => u.site === 'altinkaynak');
+    
+    const cheapest = normalUrunler.length ? tlPerGram(normalUrunler[0]!) : null;
+    const hurdaFiyat = hurda ? hurda.fiyat : null;
+    
+    let ratio = null;
+    if (cheapest && hurdaFiyat) {
+      // (En Düşük TL/gr / Hurda Alış) - 1
+      ratio = ((cheapest / hurdaFiyat) - 1) * 100;
+    }
+    
+    return { 
+      enUcuz: cheapest, 
+      hurdaAltin: hurdaFiyat, 
+      oran: ratio 
+    };
+  }, [urunler]);
 
   return (
     <div className="page">
@@ -54,18 +71,26 @@ export function Dashboard({
 
         <div className="dash-stats">
           <div className="stat">
-            <span className="stat__k">Takipteki ürün</span>
-            <span className="stat__v">{urunler.length}</span>
-          </div>
-          <div className="stat">
             <span className="stat__k">En düşük TL/gram</span>
             <span className="stat__v stat__v--accent">
               {enUcuz != null ? formatTL2(enUcuz) : "—"}
             </span>
           </div>
           <div className="stat">
-            <span className="stat__k">Sonraki güncelleme</span>
-            <span className="stat__v">{kalanSn} sn</span>
+            <span className="stat__k">22k Hurda Alış</span>
+            <span className="stat__v">
+              {hurdaAltin != null ? formatTL2(hurdaAltin) : "—"}
+            </span>
+          </div>
+          <div className="stat">
+            <span className="stat__k">Makas Oranı</span>
+            <span className="stat__v" style={{ color: oran && oran > 10 ? '#ff4d4f' : '#52c41a' }}>
+              {oran != null ? `%${oran.toFixed(2)}` : "—"}
+            </span>
+          </div>
+          <div className="stat">
+            <span className="stat__k">Güncelleme</span>
+            <span className="stat__v">{kalanSn}s</span>
           </div>
         </div>
         <div className="countdown">
