@@ -69,6 +69,8 @@ code { background: var(--card-strong); padding: 1px 6px; border-radius: 6px; fon
 .stat__k { display: block; font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
 .stat__v { display: block; font-size: 1.15rem; font-weight: 700; margin-top: 5px; letter-spacing: -0.02em; }
 .stat__v--accent { color: var(--gold); }
+.stat__v--good { color: var(--green); }
+.stat__v--warn { color: var(--red); }
 
 .countdown { height: 3px; background: var(--line); border-radius: 99px; margin-top: 14px; overflow: hidden; }
 .countdown__bar { height: 100%; background: linear-gradient(90deg, var(--gold), #f1d488); border-radius: 99px; transition: width 1s linear; }

@@ -11,6 +11,7 @@ interface Props {
   kalanSn: number;
   intervalSn: number;
   sonGuncelleme: string | null;
+  hurdaFiyat: number | null;
   onSimdiGuncelle: () => void;
   onSil: (id: string) => void;
 }
@@ -21,30 +22,19 @@ export function Dashboard({
   kalanSn,
   intervalSn,
   sonGuncelleme,
+  hurdaFiyat,
   onSimdiGuncelle,
   onSil,
 }: Props) {
-  const { enUcuz, hurdaAltin, oran } = useMemo(() => {
-    // Normal ürünler (hurda olmayanlar)
-    const normalUrunler = urunler.filter(u => u.site !== 'altinkaynak');
-    // Altınkaynak'tan gelen 22 ayar hurda fiyatı
-    const hurda = urunler.find(u => u.site === 'altinkaynak');
-    
-    const cheapest = normalUrunler.length ? tlPerGram(normalUrunler[0]!) : null;
-    const hurdaFiyat = hurda ? hurda.fiyat : null;
-    
-    let ratio = null;
-    if (cheapest && hurdaFiyat) {
-      // (En Düşük TL/gr / Hurda Alış) - 1
+  const { enUcuz, oran } = useMemo(() => {
+    const cheapest = urunler.length ? tlPerGram(urunler[0]!) : null;
+    let ratio: number | null = null;
+    if (cheapest != null && hurdaFiyat != null && hurdaFiyat > 0) {
+      // Makas: pazaryerinden aldığın gram ile aynısını hurda satarsan aradaki fark.
       ratio = ((cheapest / hurdaFiyat) - 1) * 100;
     }
-    
-    return { 
-      enUcuz: cheapest, 
-      hurdaAltin: hurdaFiyat, 
-      oran: ratio 
-    };
-  }, [urunler]);
+    return { enUcuz: cheapest, oran: ratio };
+  }, [urunler, hurdaFiyat]);
 
   return (
     <div className="page">
@@ -55,7 +45,9 @@ export function Dashboard({
               <span className="dash-title__dot" /> Altın Takip
             </h1>
             <p className="dash-sub">
-              {sonGuncelleme ? `Son güncelleme ${saat(sonGuncelleme)}` : "Henüz güncellenmedi"}
+              {sonGuncelleme
+                ? `Son güncelleme ${saat(sonGuncelleme)} · Sonraki ${kalanSn}s`
+                : `İlk güncelleme ${kalanSn}s içinde`}
             </p>
           </div>
           <button
@@ -69,7 +61,7 @@ export function Dashboard({
           </button>
         </div>
 
-        <div className="dash-stats">
+        <div className="dash-stats dash-stats--3">
           <div className="stat">
             <span className="stat__k">En düşük TL/gram</span>
             <span className="stat__v stat__v--accent">
@@ -79,18 +71,16 @@ export function Dashboard({
           <div className="stat">
             <span className="stat__k">22k Hurda Alış</span>
             <span className="stat__v">
-              {hurdaAltin != null ? formatTL2(hurdaAltin) : "—"}
+              {hurdaFiyat != null ? formatTL2(hurdaFiyat) : "—"}
             </span>
           </div>
           <div className="stat">
             <span className="stat__k">Makas Oranı</span>
-            <span className="stat__v" style={{ color: oran && oran > 10 ? '#ff4d4f' : '#52c41a' }}>
+            <span
+              className={`stat__v ${oran == null ? "" : oran > 10 ? "stat__v--warn" : "stat__v--good"}`}
+            >
               {oran != null ? `%${oran.toFixed(2)}` : "—"}
             </span>
-          </div>
-          <div className="stat">
-            <span className="stat__k">Güncelleme</span>
-            <span className="stat__v">{kalanSn}s</span>
           </div>
         </div>
         <div className="countdown">

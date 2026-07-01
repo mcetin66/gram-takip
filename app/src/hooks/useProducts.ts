@@ -35,9 +35,12 @@ export interface UseProducts {
 }
 
 export function useProducts(fetcher: Fetcher): UseProducts {
-  const [urunler, setUrunler] = useState<Product[]>(() =>
-    sortByTlGram(load<Product[]>(STORAGE_KEYS.urunler, [])),
-  );
+  const [urunler, setUrunler] = useState<Product[]>(() => {
+    // Geriye dönük temizlik: önceki sürümde Altınkaynak yanlışlıkla listeye eklenmişse çıkar.
+    const kayitli = load<Product[]>(STORAGE_KEYS.urunler, []);
+    const temiz = kayitli.filter((u) => u.site !== "altinkaynak");
+    return sortByTlGram(temiz);
+  });
   const [guncelleniyor, setGuncelleniyor] = useState(false);
 
   // Güncel referanslar (closure tuzaklarını önlemek için).

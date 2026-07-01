@@ -5,6 +5,7 @@ import { Settings } from "./pages/Settings";
 import { useSettings } from "./hooks/useSettings";
 import { useProducts } from "./hooks/useProducts";
 import { useAutoRefresh } from "./hooks/useAutoRefresh";
+import { useHurdaReference } from "./hooks/useHurdaReference";
 import { createFetcher } from "./fetch";
 
 export default function App() {
@@ -17,17 +18,8 @@ export default function App() {
   );
 
   const { urunler, ekle, sil, hepsiniGuncelle, guncelleniyor } = useProducts(fetcher);
-  
-  // Altınkaynak referansını otomatik ekle (eğer yoksa)
-  useEffect(() => {
-    const hasAltinkaynak = urunler.some(u => u.site === 'altinkaynak');
-    if (!hasAltinkaynak && urunler.length > 0) {
-      // Sadece liste boş değilse (kullanıcı kullanmaya başladıysa) ekle
-      ekle("https://www.altinkaynak.com/canli-kurlar/").catch(() => {});
-    }
-  }, [urunler.length, ekle]);
-
   const { kalanSn, simdiCalistir } = useAutoRefresh(ayarlar.otomatikGuncellemeSn, hepsiniGuncelle);
+  const hurda = useHurdaReference(ayarlar, ayarlar.otomatikGuncellemeSn);
 
   const sonGuncelleme = useMemo<string | null>(() => {
     if (urunler.length === 0) return null;
@@ -47,7 +39,11 @@ export default function App() {
             kalanSn={kalanSn}
             intervalSn={ayarlar.otomatikGuncellemeSn}
             sonGuncelleme={sonGuncelleme}
-            onSimdiGuncelle={simdiCalistir}
+            hurdaFiyat={hurda.fiyat}
+            onSimdiGuncelle={() => {
+              simdiCalistir();
+              hurda.simdiCalistir();
+            }}
             onSil={sil}
           />
         ) : (
