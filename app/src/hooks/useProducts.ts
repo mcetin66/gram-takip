@@ -5,6 +5,14 @@ import { STORAGE_KEYS } from "../config";
 import { load, save } from "../storage/storage";
 import { newId } from "../lib/id";
 import { sortByTlGram } from "../lib/calc";
+import { normalizeUrl } from "../lib/url";
+
+export class DuplicateUrunHatasi extends Error {
+  constructor(public readonly mevcut: Product) {
+    super(`Bu ürün zaten listende: "${mevcut.urunAdi}".`);
+    this.name = "DuplicateUrunHatasi";
+  }
+}
 
 const now = () => new Date().toISOString();
 
@@ -43,7 +51,20 @@ export function useProducts(fetcher: Fetcher): UseProducts {
   }, [urunler]);
 
   const ekle = useCallback(async (rawUrl: string): Promise<Product> => {
+    // Mükerrer kontrol: aynı ürün (normalize URL) zaten listede mi?
+    const key = normalizeUrl(rawUrl);
+    const mevcut = urunlerRef.current.find((u) => normalizeUrl(u.url) === key);
+    if (mevcut) throw new DuplicateUrunHatasi(mevcut);
+
     const parsed = await fetcherRef.current.fetchProduct(rawUrl);
+
+    // Ağ çağrısı sırasında aynı ürün paralel eklenmiş olabilir — bir daha kontrol.
+    const parsedKey = normalizeUrl(parsed.url);
+    const mevcut2 = urunlerRef.current.find(
+      (u) => normalizeUrl(u.url) === key || normalizeUrl(u.url) === parsedKey,
+    );
+    if (mevcut2) throw new DuplicateUrunHatasi(mevcut2);
+
     const urun = toProduct(parsed);
     setUrunler((prev) => sortByTlGram([...prev, urun]));
     return urun;

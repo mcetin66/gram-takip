@@ -70,15 +70,15 @@ const server = http.createServer(async (req, res) => {
         console.log(`Parsing URL: ${url}`);
         
         try {
-          await page.goto(url, { waitUntil: 'commit', timeout: 30000 });
+          await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
           const result = await parser.parse(page);
-          
-          const urlObj = new URL(url);
+
+          // Site kimliği parser'ın kendisinden gelir (sözleşme).
           const response = {
             url,
-            site: urlObj.hostname.replace('www.', '').split('.')[0],
-            siteLabel: urlObj.hostname.replace('www.', ''),
             ...result,
+            site: parser.site,
+            siteLabel: parser.siteLabel,
             simulated: false
           };
 
