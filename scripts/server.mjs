@@ -61,7 +61,7 @@ function readBody(req) {
   });
 }
 
-async function handleParse(url) {
+async function handleParse(url, opts = {}) {
   const parser = await getParser(url);
   if (!parser) return { status: 400, body: { error: 'desteklenmeyen site' } };
 
@@ -80,9 +80,9 @@ async function handleParse(url) {
         Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
       });
 
-      console.log(`[parse] ${url} (deneme ${deneme})`);
+      console.log(`[parse] ${url} (deneme ${deneme}${opts.debug ? ', debug' : ''})`);
       await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-      const result = await parser.parse(page);
+      const result = await parser.parse(page, opts);
 
       return {
         status: 200,
@@ -128,12 +128,13 @@ const server = http.createServer(async (req, res) => {
     return sendJson(res, 200, { ok: true, browser: !!browser?.isConnected() });
   }
 
-  if (req.url === '/parse' && req.method === 'POST') {
+  if (req.url?.startsWith('/parse') && req.method === 'POST') {
     try {
       const body = await readBody(req);
-      const { url } = JSON.parse(body || '{}');
+      const { url, debug } = JSON.parse(body || '{}');
       if (!url) return sendJson(res, 400, { error: 'url eksik' });
-      const { status, body: out } = await handleParse(url);
+      const qsDebug = /[?&]debug=1\b/.test(req.url);
+      const { status, body: out } = await handleParse(url, { debug: !!debug || qsDebug });
       return sendJson(res, status, out);
     } catch (err) {
       return sendJson(res, 500, { error: 'internal error', detay: String(err?.message || err) });
