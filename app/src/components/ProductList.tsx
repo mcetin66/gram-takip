@@ -4,9 +4,10 @@ import { ProductRow } from "./ProductRow";
 interface Props {
   urunler: Product[];
   onSil: (id: string) => void;
+  hurdaFiyat?: number | null;
 }
 
-export function ProductList({ urunler, onSil }: Props) {
+export function ProductList({ urunler, onSil, hurdaFiyat }: Props) {
   if (urunler.length === 0) {
     return (
       <div className="empty">
@@ -26,7 +27,7 @@ export function ProductList({ urunler, onSil }: Props) {
         <span></span>
       </div>
       {urunler.map((u, i) => (
-        <ProductRow key={u.id} urun={u} sira={i + 1} onSil={onSil} />
+        <ProductRow key={u.id} urun={u} sira={i + 1} onSil={onSil} hurdaFiyat={hurdaFiyat} />
       ))}
     </div>
   );

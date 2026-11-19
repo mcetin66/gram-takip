@@ -29,6 +29,7 @@ function toProduct(p: ParsedProduct): Product {
 export interface UseProducts {
   urunler: Product[];
   ekle: (rawUrl: string) => Promise<Product>;
+  ekleParsed: (p: ParsedProduct) => Product;
   sil: (id: string) => void;
   hepsiniGuncelle: () => Promise<void>;
   guncelleniyor: boolean;
@@ -73,6 +74,16 @@ export function useProducts(fetcher: Fetcher): UseProducts {
     return urun;
   }, []);
 
+  // Keşifte hazır fiyat varsa backend'e gitmeden doğrudan ekle
+  const ekleParsed = useCallback((p: ParsedProduct): Product => {
+    const key = normalizeUrl(p.url);
+    const mevcut = urunlerRef.current.find((u) => normalizeUrl(u.url) === key);
+    if (mevcut) return mevcut;
+    const urun = toProduct(p);
+    setUrunler((prev) => sortByTlGram([...prev, urun]));
+    return urun;
+  }, []);
+
   const sil = useCallback((id: string) => {
     setUrunler((prev) => prev.filter((u) => u.id !== id));
   }, []);
@@ -111,5 +122,5 @@ export function useProducts(fetcher: Fetcher): UseProducts {
     }
   }, []);
 
-  return { urunler, ekle, sil, hepsiniGuncelle, guncelleniyor };
+  return { urunler, ekle, ekleParsed, sil, hepsiniGuncelle, guncelleniyor };
 }

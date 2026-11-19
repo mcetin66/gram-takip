@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { TabBar, type Sayfa } from "./components/TabBar";
 import { Dashboard } from "./pages/Dashboard";
 import { Settings } from "./pages/Settings";
@@ -20,7 +20,7 @@ export default function App() {
     [ayarlar.kaynak, ayarlar.backendUrl],
   );
 
-  const { urunler, ekle, sil, hepsiniGuncelle, guncelleniyor } = useProducts(fetcher);
+  const { urunler, ekle, ekleParsed, sil, hepsiniGuncelle, guncelleniyor } = useProducts(fetcher);
   const { kalanSn, simdiCalistir } = useAutoRefresh(ayarlar.otomatikGuncellemeSn, hepsiniGuncelle);
   const hurda = useHurdaReference(ayarlar, ayarlar.otomatikGuncellemeSn);
   const kesif = useDiscover(ayarlar);
@@ -33,9 +33,52 @@ export default function App() {
     );
   }, [urunler]);
 
+  // İlk açılışta liste boşsa: Keşif'teki en ucuz ürünleri otomatik ekle (bir kez).
+  const tohumRef = useRef(false);
+  useEffect(() => {
+    if (tohumRef.current || !kesif.rapor) return;
+    const anahtar = "altin-takip:ototohum:v4";
+    if (localStorage.getItem(anahtar)) return;
+    tohumRef.current = true;
+    (async () => {
+      const linkler = (kesif.rapor?.gramSonuclari ?? [])
+        .filter((g) => g.urun?.link && g.urun.fiyat > 0 && g.urun.gram > 0)
+        .map((g) => g.urun!.link);
+      let eklenen = 0;
+      // 3'erli paralel ekle (backend her istekte ayrı sayfa açıyor)
+      for (let i = 0; i < linkler.length; i += 3) {
+        const parca = linkler.slice(i, i + 3);
+        for (const l of parca) {
+          const g = (kesif.rapor?.gramSonuclari ?? []).find((x) => x.urun?.link === l)?.urun;
+          if (g) { ekleParsed(keşifUrunToParsed(g)); eklenen++; }
+        }
+      }
+      // yalnız en az bir ürün eklendiyse işaretle (boş keşifte tekrar denensin)
+      if (eklenen > 0) localStorage.setItem(anahtar, "1");
+    })();
+  }, [kesif.rapor, urunler.length, ekle]);
+
   // Keşif ürününü listeye ekle (backend'e /parse ile normalize edip alır).
+  function keşifUrunToParsed(u: KesifUrun) {
+    return {
+      url: u.link,
+      site: u.site,
+      siteLabel: u.pazaryeri,
+      marka: null,
+      satici: u.satici,
+      urunAdi: u.urunAdi,
+      gram: u.gram,
+      ayar: u.ayar,
+      fiyat: u.fiyat,
+      kargo: u.kargo ?? 0,
+      simulated: false,
+    };
+  }
+
   async function keşiftenEkle(u: KesifUrun) {
-    try { await ekle(u.link); } catch { /* Duplicate hatası vs sessiz */ }
+    // Fiyat Keşif'te hazır → pazaryeri adı korunur, backend'e gitmeye gerek yok
+    if (u.fiyat > 0 && u.gram > 0) { ekleParsed(keşifUrunToParsed(u)); return; }
+    try { await ekle(u.link); } catch { /* Duplicate / hata sessiz */ }
   }
 
   return (

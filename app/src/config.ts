@@ -2,8 +2,8 @@ import type { Ayarlar } from "./types";
 
 // Varsayılan ayarlar. Kullanıcı, Ayarlar sayfasından değiştirebilir (LocalStorage).
 export const VARSAYILAN_AYARLAR: Ayarlar = {
-  kaynak: "mock", // Backend (VPS scraper) hazır olunca "backend" yap.
-  backendUrl: "http://localhost:8787",
+  kaynak: "backend",
+  backendUrl: "/altin-api",
   otomatikGuncellemeSn: 30,
 };
 

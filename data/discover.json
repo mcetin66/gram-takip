@@ -1,0 +1,220 @@
+{
+ "guncellemeTarihi": "2026-11-19T19:48:11.833688Z",
+ "sureMs": 0,
+ "kaynak": "pazaryeri",
+ "perSite": {
+  "idefix": 6,
+  "hepsiburada": 11
+ },
+ "toplamUrun": 17,
+ "gramSonuclari": [
+  {
+   "gram": 2.0,
+   "urun": {
+    "pazaryeri": "Hepsiburada",
+    "site": "hepsiburada",
+    "satici": "Sevim",
+    "urunAdi": "Sevim Gold Yatirimlik 22 Ayar 2 Gram Isciliksiz Kibrit Copu Altin Bilezik Cocuk Pm Hbc00006Y95O9",
+    "gram": 2.0,
+    "ayar": 22,
+    "fiyat": 13313.24,
+    "kargo": 0,
+    "link": "https://www.hepsiburada.com/sevim-gold-yatirimlik-22-ayar-2-gram-isciliksiz-kibrit-copu-altin-bilezik-cocuk-pm-HBC00006Y95O9",
+    "tarih": "19.11.2026 22:48",
+    "_tlg": 6656.62
+   }
+  },
+  {
+   "gram": 3.0,
+   "urun": {
+    "pazaryeri": "Hepsiburada",
+    "site": "hepsiburada",
+    "satici": "T51",
+    "urunAdi": "T51 Tugrul Altin 3 Gr Gram 22 Ayar Yatirimlik Isciliksiz Bilezik P Hbcv00004Sp30U",
+    "gram": 3.0,
+    "ayar": 22,
+    "fiyat": 19618.61,
+    "kargo": 0,
+    "link": "https://www.hepsiburada.com/t51-tugrul-altin-3-gr-gram-22-ayar-yatirimlik-isciliksiz-bilezik-p-HBCV00004SP30U",
+    "tarih": "19.11.2026 22:48",
+    "_tlg": 6539.54
+   }
+  },
+  {
+   "gram": 4.0,
+   "urun": {
+    "pazaryeri": "Hepsiburada",
+    "site": "hepsiburada",
+    "satici": "Sevim",
+    "urunAdi": "Sevim Gold Yatirimlik 22 Ayar 4 Gram Kibrit Copu Model Isciliksiz Altin Bilezik Pm Hbc00006Y93S5",
+    "gram": 4.0,
+    "ayar": 22,
+    "fiyat": 25676.98,
+    "kargo": 0,
+    "link": "https://www.hepsiburada.com/sevim-gold-yatirimlik-22-ayar-4-gram-kibrit-copu-model-isciliksiz-altin-bilezik-pm-HBC00006Y93S5",
+    "tarih": "19.11.2026 22:48",
+    "_tlg": 6419.24
+   }
+  },
+  {
+   "gram": 5.0,
+   "urun": {
+    "pazaryeri": "Hepsiburada",
+    "site": "hepsiburada",
+    "satici": "Rise",
+    "urunAdi": "Rise Gold Risegold 5 Gram 22 Ayar Kibrit Copu Bilezik Isciliksiz Pm Hbc00006Stkd3",
+    "gram": 5.0,
+    "ayar": 22,
+    "fiyat": 31458.41,
+    "kargo": 0,
+    "link": "https://www.hepsiburada.com/rise-gold-risegold-5-gram-22-ayar-kibrit-copu-bilezik-isciliksiz-pm-HBC00006STKD3",
+    "tarih": "19.11.2026 22:48",
+    "_tlg": 6291.68
+   }
+  },
+  {
+   "gram": 6.0,
+   "urun": {
+    "pazaryeri": "Hepsiburada",
+    "site": "hepsiburada",
+    "satici": "Kuyumcu",
+    "urunAdi": "Kuyumcu Nurettin 6 Gr Gram Oluklu Ajda Bilezik Isciliksiz Yatirimlik 22 Ayar Altin Pm Hbc00007Ffk4V",
+    "gram": 6.0,
+    "ayar": 22,
+    "fiyat": 40146.1,
+    "kargo": 0,
+    "link": "https://www.hepsiburada.com/kuyumcu-nurettin-6-gr-gram-oluklu-ajda-bilezik-isciliksiz-yatirimlik-22-ayar-altin-pm-HBC00007FFK4V",
+    "tarih": "19.11.2026 22:48",
+    "_tlg": 6691.02
+   }
+  },
+  {
+   "gram": 7.0,
+   "urun": {
+    "pazaryeri": "Hepsiburada",
+    "site": "hepsiburada",
+    "satici": "Tugrul",
+    "urunAdi": "Tugrul Kuyumculuk 7 Gram 22 Ayar Oluklu Ajda Isciliksiz Bilezik Pm Hbc00009Q49Ze",
+    "gram": 7.0,
+    "ayar": 22,
+    "fiyat": 44031.01,
+    "kargo": 0,
+    "link": "https://www.hepsiburada.com/tugrul-kuyumculuk-7-gram-22-ayar-oluklu-ajda-isciliksiz-bilezik-pm-HBC00009Q49ZE",
+    "tarih": "19.11.2026 22:48",
+    "_tlg": 6290.14
+   }
+  },
+  {
+   "gram": 10.0,
+   "urun": {
+    "pazaryeri": "İdefix",
+    "site": "idefix",
+    "satici": "EMMA ALTIN",
+    "urunAdi": "Emma Gold EMMAGOLD 10 GRAM 22 AYAR AJDA YATIRIMLIK İŞÇİLİKSİZ BİLEZİK",
+    "gram": 10.0,
+    "ayar": 22,
+    "fiyat": 60320.48,
+    "kargo": 0,
+    "link": "https://www.idefix.com/emma-gold-emmagold-10-gram-22-ayar-ajda-yatirimlik-isciliksiz-bilezik-p-19954516",
+    "tarih": "19.11.2026 22:48",
+    "_tlg": 6032.05
+   }
+  },
+  {
+   "gram": 12.0,
+   "urun": {
+    "pazaryeri": "İdefix",
+    "site": "idefix",
+    "satici": "LERTHA MÜCEVHERAT",
+    "urunAdi": "Lertha 12 Gr (Gram) 22 Ayar İşçiliksiz Ajda Bilezik",
+    "gram": 12.0,
+    "ayar": 22,
+    "fiyat": 84151.52,
+    "kargo": 0,
+    "link": "https://www.idefix.com/lertha-12-gr-gram-22-ayar-isciliksiz-ajda-bilezik-p-21870765",
+    "tarih": "19.11.2026 22:48",
+    "_tlg": 7012.63
+   }
+  },
+  {
+   "gram": 13.0,
+   "urun": {
+    "pazaryeri": "Hepsiburada",
+    "site": "hepsiburada",
+    "satici": "Sevim",
+    "urunAdi": "Sevim Gold Yatirimlik 22 Ayar 13 Gram Isciliksiz Kibrit Copu Altin Bilezik Pm Hbc00006Y95Hf",
+    "gram": 13.0,
+    "ayar": 22,
+    "fiyat": 81807.05,
+    "kargo": 0,
+    "link": "https://www.hepsiburada.com/sevim-gold-yatirimlik-22-ayar-13-gram-isciliksiz-kibrit-copu-altin-bilezik-pm-HBC00006Y95HF",
+    "tarih": "19.11.2026 22:48",
+    "_tlg": 6292.85
+   }
+  },
+  {
+   "gram": 15.0,
+   "urun": {
+    "pazaryeri": "İdefix",
+    "site": "idefix",
+    "satici": "RİSEGOLDKUYUMCULUK",
+    "urunAdi": "Rise Gold RİSEGOLD 15 GRAM 22 AYAR BURMA BİLEZİK İŞÇİLİKSİZ",
+    "gram": 15.0,
+    "ayar": 22,
+    "fiyat": 90560.19,
+    "kargo": 0,
+    "link": "https://www.idefix.com/rise-gold-risegold-15-gram-22-ayar-burma-bilezik-isciliksiz-p-11515370",
+    "tarih": "19.11.2026 22:48",
+    "_tlg": 6037.35
+   }
+  },
+  {
+   "gram": 20.0,
+   "urun": {
+    "pazaryeri": "İdefix",
+    "site": "idefix",
+    "satici": "RİSEGOLDKUYUMCULUK",
+    "urunAdi": "Rise Gold RİSEGOLD 20 GRAM 22 AYAR BURMA BİLEZİK İŞÇİLİKSİZ",
+    "gram": 20.0,
+    "ayar": 22,
+    "fiyat": 120696.15,
+    "kargo": 0,
+    "link": "https://www.idefix.com/rise-gold-risegold-20-gram-22-ayar-burma-bilezik-isciliksiz-p-11515347",
+    "tarih": "19.11.2026 22:48",
+    "_tlg": 6034.81
+   }
+  },
+  {
+   "gram": 25.0,
+   "urun": {
+    "pazaryeri": "İdefix",
+    "site": "idefix",
+    "satici": "RİSEGOLD",
+    "urunAdi": "Rise Gold RİSELİMİTED 25 GRAM 22 AYAR AJDA BİLEZİK İŞÇİLİKSİZ",
+    "gram": 25.0,
+    "ayar": 22,
+    "fiyat": 151140.95,
+    "kargo": 0,
+    "link": "https://www.idefix.com/rise-gold-riselimited-25-gram-22-ayar-ajda-bilezik-isciliksiz-p-15063447",
+    "tarih": "19.11.2026 22:48",
+    "_tlg": 6045.64
+   }
+  },
+  {
+   "gram": 30.0,
+   "urun": {
+    "pazaryeri": "İdefix",
+    "site": "idefix",
+    "satici": "KAVAFZADEAS",
+    "urunAdi": "KAVAFZADE 30 GRAM 22 AYAR PAFTALI YATIRIMLIK İŞÇİLİKSİZ BİLEZİK",
+    "gram": 30.0,
+    "ayar": 22,
+    "fiyat": 185221.16,
+    "kargo": 0,
+    "link": "https://www.idefix.com/kavafzade-30-gram-22-ayar-paftali-yatirimlik-isciliksiz-bilezik-p-11515332",
+    "tarih": "19.11.2026 22:48",
+    "_tlg": 6174.04
+   }
+  }
+ ]
+}

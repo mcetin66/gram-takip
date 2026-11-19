@@ -91,7 +91,7 @@ export function Dashboard({
         </div>
       </header>
 
-      <ProductList urunler={urunler} onSil={onSil} />
+      <ProductList urunler={urunler} onSil={onSil} hurdaFiyat={hurdaFiyat} />
     </div>
   );
 }

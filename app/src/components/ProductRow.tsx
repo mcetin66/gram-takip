@@ -8,11 +8,12 @@ interface Props {
   urun: Product;
   sira: number;
   onSil: (id: string) => void;
+  hurdaFiyat?: number | null;
 }
 
 type Flash = "up" | "down" | null;
 
-export function ProductRow({ urun, sira, onSil }: Props) {
+export function ProductRow({ urun, sira, onSil, hurdaFiyat }: Props) {
   const [flash, setFlash] = useState<Flash>(null);
   const oncekiRef = useRef<number>(urun.fiyat);
 
@@ -35,21 +36,31 @@ export function ProductRow({ urun, sira, onSil }: Props) {
   const marka = urun.marka?.trim() || null;
   const satici = urun.satici?.trim() || null;
   // Satıcı, marka ile ve pazaryeri ile aynı değilse ayrı chip olarak göster.
-  const saticiFarkli = !!satici
-    && satici.toLocaleLowerCase("tr") !== (marka ?? "").toLocaleLowerCase("tr")
-    && displaySite(satici).toLocaleLowerCase("tr") !== pazaryeri.toLocaleLowerCase("tr");
+  // Akakçe'den gelen "24 satıcı içinde kargo dahil en ucuz fiyat seçeneği" → "24 satıcı"
+  const saticiKisa = satici
+    ? satici.replace(/\s*içinde.*$/i, "").replace(/\s*kargo.*$/i, "").trim()
+    : null;
+  const adTemiz = urun.urunAdi.replace(/^en ucuz\s+/i, "").trim();
+  const saticiFarkli = !!saticiKisa
+    && saticiKisa.toLocaleLowerCase("tr") !== (marka ?? "").toLocaleLowerCase("tr")
+    && displaySite(saticiKisa).toLocaleLowerCase("tr") !== pazaryeri.toLocaleLowerCase("tr");
 
   return (
     <div className={`row ${flash ? `row--${flash}` : ""} ${enUcuz ? "row--best" : ""}`}>
       <div className="row__rank">{enUcuz ? "★" : sira}</div>
 
-      <div className="row__main" title={urun.urunAdi}>
+      <div className="row__main" title={adTemiz}>
+        <div className="row__title">{adTemiz}</div>
         <div className="row__chips">
           <span className="chip chip--site">{pazaryeri}</span>
           {marka && <span className="chip chip--brand">{marka}</span>}
-          {saticiFarkli && <span className="chip chip--seller">{satici}</span>}
-          <span className="chip">{urun.ayar} ayar</span>
-          <span className="chip">{formatGram(urun.gram)}</span>
+          {saticiFarkli && <span className="chip chip--seller" title={saticiKisa ?? ""}>{saticiKisa}</span>}
+          {!new RegExp(`\\b${urun.ayar}\\s*(ayar|k)\\b`, "i").test(adTemiz) && (
+            <span className="chip">{urun.ayar} ayar</span>
+          )}
+          {!new RegExp(`\\b${urun.gram}\\s*(gr|gram)\\b`, "i").test(adTemiz) && (
+            <span className="chip">{formatGram(urun.gram)}</span>
+          )}
           {urun.simulated && <span className="chip chip--sim">simüle</span>}
         </div>
       </div>
@@ -57,6 +68,11 @@ export function ProductRow({ urun, sira, onSil }: Props) {
       <div className="row__metrics">
         <div className="row__tlg">{formatTL2(tlg)}<small>/gr</small></div>
         <div className="row__price">{formatTL(urun.fiyat)}</div>
+        {hurdaFiyat ? (
+          <div className="row__delta">
+            {((tlg / hurdaFiyat - 1) * 100 >= 0 ? "+" : "") + ((tlg / hurdaFiyat - 1) * 100).toFixed(1) + "% hurda"}
+          </div>
+        ) : null}
         <div className="row__time">{goreliZaman(urun.sonGuncelleme)}</div>
       </div>
 

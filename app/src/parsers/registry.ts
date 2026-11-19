@@ -4,6 +4,7 @@ import { trendyolParser } from "./trendyol";
 import { hepsiburadaParser } from "./hepsiburada";
 import { n11Parser } from "./n11";
 import { amazonParser } from "./amazon";
+import { akakceParser } from "./akakce";
 
 /** Desteklenen parser'lar. Yeni site = buraya bir satır ekle. */
 export const PARSERS: readonly SiteParser[] = [
@@ -12,6 +13,7 @@ export const PARSERS: readonly SiteParser[] = [
   hepsiburadaParser,
   n11Parser,
   amazonParser,
+  akakceParser,
 ];
 
 export const DESTEKLENEN_SITELER = PARSERS.map((p) => p.siteLabel);
